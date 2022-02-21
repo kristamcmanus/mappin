@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const PinSchema = new mongoose.Schema({
         username: {
             type: String,
-            required: true,
+            require: true,
         },
         title: {
             type: String,
-            required: true,
+            require: true,
             min: 3
         },
         desc: {
