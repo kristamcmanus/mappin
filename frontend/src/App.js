@@ -1,18 +1,27 @@
 import * as React from 'react';
 import Map, {Marker} from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+// import { LocationOnIcon } from 'mapbox-gl/dist/mapbox-gl.css';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 function App() {
   return (
+    <div className="App">
     <Map
-      initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
+        initialViewState={{
+        longitude: -77.03637,
+        latitude: 38.89511,
         zoom: 14
       }}
-      style={{ width: 600, height: 400 }}
+      style={{ width: "100vw", height: "100vh" }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
-    />
+      >
+        <Marker longitude={-100} latitude={40} anchor="bottom" >
+          {/* <img src="./pin.png" alt="" /> */}
+          <LocationOnIcon style={{ fontSize: "40" }} />
+        </Marker>
+      </Map>
+    </div>
   );
 }
 
