@@ -5,6 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import "./App.css";
 import axios from 'axios';
+import { format } from "timeago.js";
 // import { LocationOnIcon } from 'mapbox-gl/dist/mapbox-gl.css';
 // import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -59,7 +60,7 @@ function App() {
                 </div>
                 <label>Information</label>
                 <span className='username'>Created by <b>{p.username}</b></span>
-                <span className='date'>1 hour ago</span>
+                <span className='date'>{format(p.createdAt)}</span>
               </div>
               You are here
             </Popup>
