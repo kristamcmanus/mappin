@@ -1,12 +1,27 @@
-import * as React from 'react';
+// import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Map, { Marker, Popup } from 'react-map-gl';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import "./App.css";
+import axios from 'axios';
 // import { LocationOnIcon } from 'mapbox-gl/dist/mapbox-gl.css';
 // import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 function App() {
+  const [pins, setPins] = useState([])
+  useEffect(() => {
+    const getPins = async () => {
+      try {
+        const res = await axios.get("/pins");
+        setPins(res.data);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+    getPins()
+  }, []);
+
   return (
     <div className="App">
       <Map
@@ -18,36 +33,40 @@ function App() {
         style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
         mapStyle="mapbox://styles/kmcmanus310/ckzxefk7x000y14nqjbjx360f"
       >
-        <Marker longitude={-77.036560} latitude={38.897957} anchor="bottom" >
-          {/* <img src="./pin.png" alt="" /> */}
-          <LocationOnIcon style={{ fontSize: 40, color: "black" }} />
-        </Marker>
-        <Popup
-          longitude={-77.036560}
-          latitude={38.897957}
-          anchor="bottom"
-        >
-          <div className='card'>
-            <label>Place</label>
-            <h4 className='place'>White House</h4>
-            <label>Review</label>
-            <p className='desc'>Beautiful place. I like it.</p>
-            <label>Rating</label>
-            <div className='stars'>
-              <StarIcon className='star' />
-              <StarIcon className='star' />
-              <StarIcon className='star' />
-              <StarIcon className='star' />
-              <StarIcon className='star' />
-            </div>
-            <label>Information</label>
-            <span className='username'>Created by <b>Krista</b></span>
-            <span className='date'>1 hour ago</span>
-          </div>
-          You are here
-        </Popup>
+        {pins.map((p) => (
+          <>
+            <Marker longitude={p.long} latitude={p.lat} anchor="bottom" >
+              {/* <img src="./pin.png" alt="" /> */}
+              <LocationOnIcon style={{ fontSize: 40, color: "black" }} />
+            </Marker>
+            <Popup
+              longitude={p.long}
+              latitude={p.lat}
+              anchor="bottom"
+            >
+              <div className='card'>
+                <label>Place</label>
+                <h4 className='place'>{p.title}</h4>
+                <label>Review</label>
+                <p className='desc'>{p.desc}</p>
+                <label>Rating</label>
+                <div className='stars'>
+                  <StarIcon className='star' />
+                  <StarIcon className='star' />
+                  <StarIcon className='star' />
+                  <StarIcon className='star' />
+                  <StarIcon className='star' />
+                </div>
+                <label>Information</label>
+                <span className='username'>Created by <b>{p.username}</b></span>
+                <span className='date'>1 hour ago</span>
+              </div>
+              You are here
+            </Popup>
+          </>
+        ))}
       </Map>
-    </div>
+    </div >
   );
 }
 
